@@ -4,7 +4,8 @@
     "express": "^4.18.2"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest"
   },
   "name": "node-server-jest",
   "version": "1.0.0",
