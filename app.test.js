@@ -14,7 +14,7 @@ describe("POST /users", () =>
       .post("/users")
       .send(
       {
-        username: "username",
+        //username: "username",
         password: "password"
       })
 
