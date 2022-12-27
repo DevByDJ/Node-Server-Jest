@@ -1,18 +1,43 @@
 import express from 'express'
 
-const app = express()
+export default function(database) 
+{
+  let app = express()
 
-app.use(express.json())
-
-app.post('/users', (req, res) => {
-  const {username, password} = req.body
-  if (!password || !username)
+  app.use(express.json())
+  app.post('/users', async (req, res) => 
   {
-    res.sendStatus(400)
-    return
-  }
+    const {username, password} = req.body
 
-  res.send({userId: 0})
-})
+    if (!password || !username)
+    {
+      res.sendStatus(400)
+      return
+    }
 
-export default app
+    else
+    {
+      try
+      {
+        const user = await database.getUser(username)
+        if(user)
+        {
+          res.status(400).send({ error: "username already taken" })
+          return
+        }
+        const userId = await database.createUser(username, password)
+        res.send({ userId })     
+      }
+
+      catch (error)
+      {
+        res.sendStatus(500)
+        return
+      }
+    }
+
+  })
+
+  return app
+}
+
