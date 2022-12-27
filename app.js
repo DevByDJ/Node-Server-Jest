@@ -15,9 +15,27 @@ export default function(database)
       return
     }
 
-    const userId = await database.createUser(username, password)
+    else
+    {
+      try
+      {
+        const user = await database.getUser(username)
+        if(user)
+        {
+          res.status(400).send({ error: "username already taken" })
+          return
+        }
+        const userId = await database.createUser(username, password)
+        res.send({ userId })     
+      }
 
-    res.send({ userId })
+      catch (error)
+      {
+        res.sendStatus(500)
+        return
+      }
+    }
+
   })
 
   return app
