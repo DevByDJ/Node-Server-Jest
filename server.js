@@ -1,5 +1,5 @@
 import database from './database.js'
-import app from './app.js'
+import makeApp from './app.js'
 
 const app = makeApp(database)
 
