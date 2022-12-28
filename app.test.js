@@ -181,7 +181,7 @@ describe("POST /users", () =>
         throw new Error('Mock error');
       });
 
-      const res = await request(app)                                    // Send a POST request to the '/users' endpoint with a body containing a username and password
+      const response = await request(app)                               // Send a POST request to the '/users' endpoint with a body containing a username and password
       .post('/users')
       .send(
         {
@@ -191,7 +191,7 @@ describe("POST /users", () =>
       );
 
       
-      expect(res.status).toBe(500);                                     // Expect the response status code to be 500
+      expect(response.status).toBe(500);                                // Expect the response status code to be 500
     });
     
 

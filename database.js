@@ -33,3 +33,5 @@ export async function createUser(username, password)
 
   return insertId
 }
+
+export default { getUser, createUser };

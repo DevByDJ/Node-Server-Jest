@@ -2,9 +2,11 @@ import express from 'express'
 
 export default function(database) 
 {
+  
   let app = express()
 
   app.use(express.json())
+  
   app.post('/users', async (req, res) => 
   {
     const {username, password} = req.body
