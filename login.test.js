@@ -1,14 +1,14 @@
 import request from 'supertest'
-import makeApp from './app.js'
+import makeLogin from './routes/login'
 import {jest} from '@jest/globals'
 
 const createUser = jest.fn()
 const getUser = jest.fn()
 
-const app = makeApp({createUser, getUser})
+const login = makeLogin({createUser, getUser})
 
 
-describe("POST /users", () => 
+describe("POST /login", () => 
 {
   
   beforeEach(() =>
@@ -35,8 +35,8 @@ describe("POST /users", () =>
       for(const body of bodyData)
       {
         createUser.mockReset()                                   // Resets mock state
-        await request(app)
-        .post("/users")
+        await request(login)
+        .post("/login")
         .send(body)             
         expect(createUser.mock.calls.length).toBe(1)             // expects function to be called once
         expect(createUser.mock.calls[0][0]).toBe(body.username)  // expects the first time the function is called [0] the first parameter [0] is username.
@@ -57,8 +57,8 @@ describe("POST /users", () =>
       for(const body of bodyData)
       {
         getUser.mockReset()                                   // Resets mock state
-        await request(app)
-        .post("/users")
+        await request(login)
+        .post("/login")
         .send(body)             
         expect(getUser.mock.calls.length).toBe(1)             // expects function to be called once
         expect(getUser.mock.calls[0][0]).toBe(body.username)  // expects the first time the function is called [0] the first parameter [0] is username.
@@ -74,8 +74,8 @@ describe("POST /users", () =>
       {
         createUser.mockReset()
         createUser.mockResolvedValue(i)
-        const response = await request(app)
-        .post("/users")
+        const response = await request(login)
+        .post("/login")
         .send(
           {
             username: "username",
@@ -90,8 +90,8 @@ describe("POST /users", () =>
 
     it("should respond with a 200 status code", async () => 
     {
-      const response = await request(app)
-      .post("/users")
+      const response = await request(login)
+      .post("/login")
       .send(
       {
         username: "username",
@@ -104,8 +104,8 @@ describe("POST /users", () =>
 
     it("should specify json in the content type header", async () => 
     {
-      const response = await request(app)
-      .post("/users")
+      const response = await request(login)
+      .post("/login")
       .send(
       {
         username: "username",
@@ -118,8 +118,8 @@ describe("POST /users", () =>
     it("should contain a response with a userID", async () => 
     {
       
-      const response = await request(app)
-      .post("/users")
+      const response = await request(login)
+      .post("/login")
       .send(
       {
         username: "username",
@@ -147,8 +147,8 @@ describe("POST /users", () =>
         {
           
           
-          const response = await request(app)                           // each loop sends body and expects a response.
-          .post("/users")
+          const response = await request(login)                           // each loop sends body and expects a response.
+          .post("/login")
           .send(body)
 
           expect(response.statusCode).toBe(400)
@@ -160,8 +160,8 @@ describe("POST /users", () =>
     {
       getUser.mockImplementation(() => true);                           // Mock the value of username in the argument .getUser(username)
 
-      const response = await request(app)                               // Send a POST request to the '/users' endpoint with a body containing a username and password
-      .post("/users")
+      const response = await request(login)                               // Send a POST request to the '/login' endpoint with a body containing a username and password
+      .post("/login")
       .send(
       {
         username: "username",
@@ -181,8 +181,8 @@ describe("POST /users", () =>
         throw new Error('Mock error');
       });
 
-      const response = await request(app)                               // Send a POST request to the '/users' endpoint with a body containing a username and password
-      .post('/users')
+      const response = await request(login)                               // Send a POST request to the '/login' endpoint with a body containing a username and password
+      .post('/login')
       .send(
         {
           username: 'username', 
