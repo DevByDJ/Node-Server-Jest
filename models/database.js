@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import express from 'express'
 
 const schema = mongoose.Schema
 
@@ -11,20 +12,6 @@ const userSchema = new schema
     lastName: String
   }, { timestamps: true}
 )
-
-export function createNewUser (email, password, firstName, lastName)
-{
-  let newUser = new User (
-    {
-      username: email,
-      password: password,
-      firstName: firstName,
-      lastName: lastName,
-    }
-  )
-  newUser.save()
-  return newUser
-}
 
 
 const User = mongoose.model('user', userSchema)

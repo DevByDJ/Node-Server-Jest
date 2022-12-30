@@ -1,46 +1,47 @@
-import express from 'express'
+import express, { json } from 'express'
+import {validateUser} from '../scripts/login.js'
 
-export default function(database) 
+const router = express.Router()
+
+router.use(json())
+
+router.get('/', (req, res) =>
 {
-  
-  let app = express()
+  console.log('Login Page')
+  res.render('login')
+})
 
-  app.use(express.json())
-  
-  app.post('/login', async (req, res) => 
+router.post('/', async (req, res) => 
   {
-    const {username, password} = req.body
 
-    if (!password || !username)
+    const { email, password } = req.body
+    console.log("username: ", email)
+    console.log("password: ", password)
+
+    if(!email || !password)
     {
-      res.sendStatus(400)
-      return
+      res.status(400).send({ error: "YOU MUST ENTER IN A USERNAME AND PASSWORD" })
+      return 
     }
-
-    else
+    
+    try
     {
-      try
-      {
-        const user = await database.getUser(username)
-        if(user)
+        const user = await validateUser(email, password)
+        if(!user)
         {
-          res.status(400).send({ error: "username already taken" })
+          res.status(400).send({ error: "FAILED TO LOG IN!" })
           return
         }
-        const userId = await database.createUser(username, password)
-        res.send({ userId })     
-      }
+        else{
+          console.log('SUCCESS YOU ARE LOGGED IN')
+          res.redirect('dashboard')
+        }
 
-      catch (error)
-      {
-        res.sendStatus(500)
-        return
-      }
+    } catch(error){
+      console.log(error)
     }
 
   })
 
-  return app
-}
-
-// Exports this module as a router to be called by the main app.
+// Exports this module as a router to be called by the main router.
+export default router
