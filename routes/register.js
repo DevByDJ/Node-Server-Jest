@@ -1,5 +1,5 @@
-import express from 'express'
-import { createNewUser } from '../scripts/register.js'
+const express = require('express')
+const { createNewUser } = require('../scripts/register.js')
 
 const router = express.Router()
 
@@ -48,4 +48,4 @@ router.post('/', async (req, res) =>
 })
 
 
-export default router
+module.exports = router

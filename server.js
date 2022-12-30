@@ -1,7 +1,7 @@
-import express from 'express'
-import mongoose from 'mongoose'
-import registerRouter from './routes/register.js'
-import loginRouter from './routes/login.js'
+const express = require('express')
+const mongoose = require('mongoose')
+const registerRouter = require('./routes/register.js') 
+const loginRouter = require('./routes/login.js')
 
 const app = express()
 
@@ -55,7 +55,7 @@ function logger(req, res, next) {
   next()
 }
 
-app.listen(8080)
+const port = process.env.PORT || 8080
+app.listen(port)
 
-
-export default app
+module.exports = app

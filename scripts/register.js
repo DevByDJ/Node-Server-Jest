@@ -1,6 +1,6 @@
-import User from '../models/database.js'
+const User = require('../models/database.js')
 
-export function createNewUser (email, password, firstName, lastName)
+function createNewUser (email, password, firstName, lastName)
 {
   try
   {

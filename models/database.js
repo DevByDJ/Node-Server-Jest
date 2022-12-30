@@ -1,5 +1,5 @@
-import mongoose from 'mongoose'
-import express from 'express'
+const mongoose = require('mongoose')
+const express = require('express')
 
 const schema = mongoose.Schema
 
@@ -16,4 +16,4 @@ const userSchema = new schema
 
 const User = mongoose.model('user', userSchema)
 
-export default User
+module.exports = User

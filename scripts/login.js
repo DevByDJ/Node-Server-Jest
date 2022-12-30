@@ -1,6 +1,6 @@
-import User from '../models/database.js'
+const User = require('../models/database.js')
 
-export async function validateUser (email, password)
+async function validateUser (email, password)
 {
   try
   {
@@ -27,3 +27,5 @@ export async function validateUser (email, password)
     console.log(error)
   }
 }
+
+module.exports = {validateUser}
