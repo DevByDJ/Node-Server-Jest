@@ -1,11 +1,10 @@
 import request from 'supertest'
-import makeLogin from './routes/login'
+import app from './server.js'
 import {jest} from '@jest/globals'
 
-const createUser = jest.fn()
-const getUser = jest.fn()
 
-const login = makeLogin({createUser, getUser})
+// const createUser = jest.fn()
+// const validateUser = jest.fn()
 
 
 describe("POST /login", () => 
@@ -15,8 +14,8 @@ describe("POST /login", () =>
   {
     createUser.mockReset()
     createUser.mockResolvedValue(0)
-    getUser.mockReset()
-    getUser.mockResolvedValue(0)
+    validateUser.mockReset()
+    validateUser.mockResolvedValue(0)
   })
 
   describe("given a username and password", () => 
@@ -56,12 +55,12 @@ describe("POST /login", () =>
 
       for(const body of bodyData)
       {
-        getUser.mockReset()                                   // Resets mock state
+        validateUser.mockReset()                                   // Resets mock state
         await request(login)
         .post("/login")
         .send(body)             
-        expect(getUser.mock.calls.length).toBe(1)             // expects function to be called once
-        expect(getUser.mock.calls[0][0]).toBe(body.username)  // expects the first time the function is called [0] the first parameter [0] is username.
+        expect(validateUser.mock.calls.length).toBe(1)             // expects function to be called once
+        expect(validateUser.mock.calls[0][0]).toBe(body.username)  // expects the first time the function is called [0] the first parameter [0] is username.
         
       }
 
@@ -158,7 +157,7 @@ describe("POST /login", () =>
 
     it("should respond with a status code 400 if the username is already taken.", async () =>
     {
-      getUser.mockImplementation(() => true);                           // Mock the value of username in the argument .getUser(username)
+      validateUser.mockImplementation(() => true);                           // Mock the value of username in the argument .validateUser(username)
 
       const response = await request(login)                               // Send a POST request to the '/login' endpoint with a body containing a username and password
       .post("/login")
@@ -175,7 +174,7 @@ describe("POST /login", () =>
     it('should respond with a 500 status code when an error is thrown in the try block', async () => {
 
       
-      getUser.mockImplementation(() => false);                          // Mock the value of username in the argument .getUser(username)
+      validateUser.mockImplementation(() => false);                          // Mock the value of username in the argument .validateUser(username)
       
       createUser.mockImplementation(() => {                             // Mock the .createUser function to throw an error
         throw new Error('Mock error');
