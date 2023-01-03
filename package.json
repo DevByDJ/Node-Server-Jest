@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "nodemon server.js",
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --watchAll"
+    "test": "jest --forceExit --detectOpenHandles  --watchAll --maxWorkers=1"
   },
   "name": "node-server-jest",
   "version": "1.0.0",
