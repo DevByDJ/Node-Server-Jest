@@ -1,7 +1,10 @@
 const express = require('express')
+const {json} = require('express')
 const { createNewUser } = require('../scripts/register.js')
 
 const router = express.Router()
+
+router.use(json())
 
 router.get('/', (req, res) =>
 {
@@ -12,37 +15,29 @@ router.get('/', (req, res) =>
 router.post('/', async (req, res) =>
 {
 
-    const {_id, username, password, firstName, lastName} = req.body
-
-    if (!password || !username)
+  try
     {
-      res.sendStatus(400)
-      return
-    }
-
-    else
-    {
-      try
+      const {email, password, firstName, lastName} = req.body
+      console.log('Peep: ', email, password, firstName, lastName)
+      const userCreated = await createNewUser(email, password, firstName, lastName)
+      if(userCreated)
       {
-        const userCreated = await createNewUser(username, password, firstName, lastName)
-        if(userCreated)
-        {
-          res.status(200).send({ _id })
-          return
-        }
-        else
-        {
-          res.status(400).send({ error: "user could not be created!"})
-          return
-        }
-
-      }
-
-      catch (error)
-      {
-        res.sendStatus(500)
+        res.status(200).redirect('login')
         return
       }
+      else
+      {
+        console.log('Peep: ', userCreated)
+        res.status(400).send({ error: "user could not be created!"})
+        return
+      }
+
+    }
+
+    catch (error)
+    {
+      res.sendStatus(500)
+      return
     }
   
 })

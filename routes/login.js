@@ -8,23 +8,16 @@ router.use(json())
 
 router.get('/', (req, res) =>
 {
-  console.log('Login Page')
   res.render('login')
 })
 
 router.post('/', async (req, res) => 
   {
-
-    // if(!email || !password)
-    // {
-    //   res.status(400).send({ error: "YOU MUST ENTER IN A USERNAME AND PASSWORD" })
-    //   return 
-    // }
     
     try
     {
       const { email, password } = req.body
-      console.log("username: ", email)
+      console.log("email: ", email)
       console.log("password: ", password)
       const user = await validateUser(email, password)
       if(!user)
@@ -34,7 +27,7 @@ router.post('/', async (req, res) =>
       }
       else{
         console.log('SUCCESS YOU ARE LOGGED IN')
-        res.redirect('dashboard')
+        res.status(200).redirect('dashboard')
       }
 
     } catch(error){
