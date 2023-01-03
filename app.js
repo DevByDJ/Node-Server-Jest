@@ -1,43 +1,40 @@
-import express from 'express'
+const express = require('express')
+const registerRouter = require('./routes/register.js') 
+const loginRouter = require('./routes/login.js')
 
-export default function(database) 
+const app = express()
+
+app.set('view engine', 'ejs')
+
+app.use(express.urlencoded({ extended: true}))
+
+app.use(express.static('public'))
+
+app.use(logger)
+
+app.use('/register', registerRouter)
+
+app.use('/login', loginRouter)
+
+app.get('/', (req, res) => 
 {
-  let app = express()
+  console.log('App is running..')
+  res.statusCode(400)
+  
+})
 
-  app.use(express.json())
-  app.post('/users', async (req, res) => 
-  {
-    const {username, password} = req.body
 
-    if (!password || !username)
-    {
-      res.sendStatus(400)
-      return
-    }
+app.get('/dashboard', (req, res) =>
+{
+  console.log('Welcome to the Dashboard')
+  res.render('dashboard')
+})
 
-    else
-    {
-      try
-      {
-        const user = await database.getUser(username)
-        if(user)
-        {
-          res.status(400).send({ error: "username already taken" })
-          return
-        }
-        const userId = await database.createUser(username, password)
-        res.send({ userId })     
-      }
 
-      catch (error)
-      {
-        res.sendStatus(500)
-        return
-      }
-    }
 
-  })
-
-  return app
+function logger(req, res, next) {
+  console.log("The current URL path is: " + req.originalUrl)
+  next()
 }
 
+module.exports = app
