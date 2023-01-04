@@ -4,7 +4,7 @@ let mongoose = require('mongoose')
 let mongoDB = 'mongodb+srv://djoseph13:ecV0jmMYY7xW5Bmi@cluster0.b9dbr5a.mongodb.net/?retryWrites=true&w=majority'
 mongoose.connect(mongoDB)
 
-describe("Login Route Test", () => {
+describe("Register Route Test", () => {
 
   let server;
 

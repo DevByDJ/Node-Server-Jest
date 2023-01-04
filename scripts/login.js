@@ -5,16 +5,14 @@ async function validateUser (email, password)
   try
   {
     let validated = false
-    const validatedEmail = await User.findOne({email: email})
-
-    const validatedPassword = await User.findOne({password: password})
+    const validatedProfile = await User.findOne({email: email, password: password})
 
 
-    if(validatedEmail.email == email)
+    if(validatedProfile.email == email)
     {
       console.log("Email verified")
 
-      if(validatedPassword.password == password)
+      if(validatedProfile.password == password)
       {
         console.log("Password verified")
         validated = true
