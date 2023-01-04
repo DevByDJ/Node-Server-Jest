@@ -1,6 +1,7 @@
 const express = require('express')
 const registerRouter = require('./routes/register.js') 
 const loginRouter = require('./routes/login.js')
+const dashboardRouter = require('./routes/dashboard.js')
 
 const app = express()
 
@@ -12,9 +13,13 @@ app.use(express.static('public'))
 
 app.use(logger)
 
+app.locals.userName = "Danny Joseph"
+
 app.use('/register', registerRouter)
 
 app.use('/login', loginRouter)
+
+app.use('/dashboard', dashboardRouter)
 
 app.get('/', (req, res) => 
 {
@@ -24,11 +29,7 @@ app.get('/', (req, res) =>
 })
 
 
-app.get('/dashboard', (req, res) =>
-{
-  console.log('Welcome to the Dashboard')
-  res.render('dashboard')
-})
+
 
 
 
