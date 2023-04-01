@@ -19,7 +19,7 @@ app.use('/login', loginRouter)
 app.get('/', (req, res) => 
 {
   console.log('App is running..')
-  res.statusCode(400)
+  //res.statusCode(400)
   
 })
 
