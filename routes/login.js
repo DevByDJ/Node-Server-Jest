@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const express = require('express')
 const {json} = require('express')
 const {validateUser} = require('../scripts/login.js') 
@@ -28,6 +30,8 @@ router.post('/', async (req, res) =>
       }
       else{
         console.log('SUCCESS YOU ARE LOGGED IN')
+        const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
+        res.json({accessToken: accessToken})
         res.status(200).redirect('dashboard')
       }
 
@@ -36,9 +40,7 @@ router.post('/', async (req, res) =>
       res.status(500)
     }
 
-    const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
-
-    res.json({accessToken: accessToken})
+    
 
   })
 
