@@ -21,7 +21,7 @@
                 <h1>Sign In</h1>
                 <div>Please login to use the platform</div>
             </div>
-            <form class="login-card-form" method="post">
+            <form class="login-card-form" method="post" id="login-form">
                 <div class="form-item">
                     <span class="form-item-icon material-symbols-rounded">mail</span>
                     <input type="text" placeholder="Enter Email" name="email" 
@@ -39,7 +39,7 @@
                     </div>
                     <a href="#">I forgot my password!</a>
                 </div>
-                <button type="submit">Sign In</button>
+                <button type="submit" id="submit-btn">Sign In</button>
             </form>
             <div class="login-card-footer">
                 Don't have an account? <a href="#">Create a free account.</a>
@@ -67,6 +67,31 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('submit-btn').addEventListener('click', async (event) => {
+          event.preventDefault(); // Prevent the default form submission
+      
+          const email = document.querySelector('input[name="email"]').value;
+          const password = document.querySelector('input[name="password"]').value;
+      
+          const response = await fetch('/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: email, password: password }),
+          });
+      
+          if (response.ok) {
+            const data = await response.json();
+            localStorage.setItem('accessToken', data.accessToken); // Save the access token to local storage
+            window.location.href = '/dashboard'; // Redirect to the dashboard
+          } else {
+            // Handle login error
+          }
+        });
+      </script>
 
 </body>
 

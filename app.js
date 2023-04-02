@@ -1,6 +1,8 @@
 const express = require('express')
 const registerRouter = require('./routes/register.js') 
 const loginRouter = require('./routes/login.js')
+const dashboardRouter = require('./routes/dashboard.js')
+const protectedRouter = require('./routes/protected.js')
 
 const app = express()
 
@@ -12,9 +14,15 @@ app.use(express.static('public'))
 
 app.use(logger)
 
+app.locals.userName = "Danny Joseph"
+
 app.use('/register', registerRouter)
 
 app.use('/login', loginRouter)
+
+app.use('/protected', protectedRouter)
+
+app.use('/dashboard', dashboardRouter)
 
 app.get('/', (req, res) => 
 {
@@ -24,17 +32,10 @@ app.get('/', (req, res) =>
 })
 
 
-app.get('/dashboard', (req, res) =>
-{
-  console.log('Welcome to the Dashboard')
-  res.render('dashboard')
-})
-
-
-
 function logger(req, res, next) {
   console.log("The current URL path is: " + req.originalUrl)
   next()
 }
+
 
 module.exports = app

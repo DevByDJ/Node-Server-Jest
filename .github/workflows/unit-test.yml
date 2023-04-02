@@ -19,4 +19,7 @@ jobs:
       - name: npm install
         run: npm ci
       - name: tests
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
         run: npm run test

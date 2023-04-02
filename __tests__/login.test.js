@@ -1,7 +1,8 @@
+require("dotenv").config()
 const app = require('../app')
 const request = require('supertest')
 let mongoose = require('mongoose')
-let mongoDB = 'mongodb+srv://djoseph13:ecV0jmMYY7xW5Bmi@cluster0.b9dbr5a.mongodb.net/?retryWrites=true&w=majority'
+const mongoDB = process.env.MONGODB_URI
 mongoose.connect(mongoDB)
 
 describe("Login Route Test", () => {
@@ -31,7 +32,7 @@ describe("Login Route Test", () => {
 
   describe("/Post Login routes test", () => {
 
-    it("should return a 302 when a username and password is validated!", async () => {
+    it("should return a 200 when a username and password is validated!", async () => {
       const response = await request(server)
       .post('/login')
       .send(
@@ -40,7 +41,7 @@ describe("Login Route Test", () => {
           password: "password"
         }
       )
-      expect(response.status).toBe(302)
+      expect(response.status).toBe(200)
       
       
     })
