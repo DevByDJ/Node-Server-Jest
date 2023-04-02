@@ -2,6 +2,7 @@ const express = require('express')
 const registerRouter = require('./routes/register.js') 
 const loginRouter = require('./routes/login.js')
 const dashboardRouter = require('./routes/dashboard.js')
+const protectedRouter = require('./routes/protected.js')
 
 const app = express()
 
@@ -19,6 +20,8 @@ app.use('/register', registerRouter)
 
 app.use('/login', loginRouter)
 
+app.use('/protected', protectedRouter)
+
 app.use('/dashboard', dashboardRouter)
 
 app.get('/', (req, res) => 
@@ -29,13 +32,10 @@ app.get('/', (req, res) =>
 })
 
 
-
-
-
-
 function logger(req, res, next) {
   console.log("The current URL path is: " + req.originalUrl)
   next()
 }
+
 
 module.exports = app

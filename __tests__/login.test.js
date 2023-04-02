@@ -31,7 +31,7 @@ describe("Login Route Test", () => {
 
   describe("/Post Login routes test", () => {
 
-    it("should return a 302 when a username and password is validated!", async () => {
+    it("should return a 200 when a username and password is validated!", async () => {
       const response = await request(server)
       .post('/login')
       .send(
@@ -40,7 +40,7 @@ describe("Login Route Test", () => {
           password: "password"
         }
       )
-      expect(response.status).toBe(302)
+      expect(response.status).toBe(200)
       
       
     })

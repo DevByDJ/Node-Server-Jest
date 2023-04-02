@@ -45,7 +45,7 @@
         </div>
         <div class="games">
           <div class="status">
-            <h1>Dashboard</h1>
+            <h1 id="dashboard-title">Dashboard</h1>
             <input type="text" />
           </div>
           <div class="cards">
@@ -82,5 +82,37 @@
     </main>
     <div class="circle1"></div>
     <div class="circle2"></div>
+    <script>
+      async function fetchData() {
+        const accessToken = localStorage.getItem('accessToken');
+    
+        if (accessToken) {
+          const response = await fetch('/protected', {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + accessToken, // Send the access token in the Authorization header
+            },
+          });
+
+          console.log("Access Token: ", accessToken)
+    
+          if (response.ok) {
+            const data = await response.json();
+            // Update the elements with the fetched data
+            document.getElementById('dashboard-title').textContent = data.title;
+          } else {
+            // Handle request error, e.g., redirect to the login page
+            window.location.href = '/login';
+          }
+        } else {
+          // Redirect to the login page or show an error
+          window.location.href = '/login';
+        }
+      }
+    
+      // Fetch the data when the dashboard is loaded
+      fetchData();
+    </script>
   </body>
 </html>

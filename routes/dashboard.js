@@ -1,6 +1,7 @@
 const express = require('express')
 const {json} = require('express')
 const { findUsername } = require('../scripts/dashboard.js')
+const { authenticateToken } = require('../authentication.js')
 
 const router = express.Router()
 

@@ -32,15 +32,13 @@ router.post('/', async (req, res) =>
         console.log('SUCCESS YOU ARE LOGGED IN')
         const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
         res.json({accessToken: accessToken})
-        res.status(200).redirect('dashboard')
+        .status(200)
       }
 
     } catch(error){
       console.log(error)
       res.status(500)
     }
-
-    
 
   })
 
