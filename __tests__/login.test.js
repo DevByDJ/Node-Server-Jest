@@ -1,7 +1,8 @@
+require("dotenv").config()
 const app = require('../app')
 const request = require('supertest')
 let mongoose = require('mongoose')
-let mongoDB = 'mongodb+srv://djoseph13:ecV0jmMYY7xW5Bmi@cluster0.b9dbr5a.mongodb.net/?retryWrites=true&w=majority'
+const mongoDB = process.env.MONGODB_URI
 mongoose.connect(mongoDB)
 
 describe("Login Route Test", () => {

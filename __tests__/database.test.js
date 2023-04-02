@@ -1,5 +1,6 @@
+require("dotenv").config()
 const mongoose = require('mongoose')
-const uri = 'mongodb+srv://djoseph13:ecV0jmMYY7xW5Bmi@cluster0.b9dbr5a.mongodb.net/?retryWrites=true&w=majority'
+const uri = process.env.MONGODB_URI
 mongoose.connect(uri)
 const User = require('../models/database')
 
@@ -50,7 +51,7 @@ describe("GET Users", () => {
 describe("SAVE Users", () => {
 
   beforeAll(async () => {
-    const uri = 'mongodb+srv://djoseph13:ecV0jmMYY7xW5Bmi@cluster0.b9dbr5a.mongodb.net/?retryWrites=true&w=majority'
+    const uri = process.env.MONGODB_URI
     await mongoose.connect(uri, { useNewUrlParser: true })
   })
 
@@ -74,7 +75,7 @@ describe("SAVE Users", () => {
 describe("UPDATE Users", () => {
 
   beforeAll(async () => {
-    const uri = 'mongodb+srv://djoseph13:ecV0jmMYY7xW5Bmi@cluster0.b9dbr5a.mongodb.net/?retryWrites=true&w=majority'
+    const uri = process.env.MONGODB_URI
     await mongoose.connect(uri, { useNewUrlParser: true })
   })
 
