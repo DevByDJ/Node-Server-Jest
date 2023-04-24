@@ -1,4 +1,11 @@
 # Node-Server-Jest
+
+> Register Page (prototype)
+![Register](https://user-images.githubusercontent.com/89165878/233884751-d5a16b74-6eb2-4109-b9dc-fb15622c8a62.gif)
+> Login Page
+![Login](https://user-images.githubusercontent.com/89165878/233884759-ba34d742-8496-4402-a6d0-cc07cd972376.gif)
+> Dashboard
+![dashboard](https://user-images.githubusercontent.com/89165878/233885508-2b67e8dd-e986-45bb-b4c0-69e6e15b7322.gif)
  
 ## Login Application
 
@@ -69,5 +76,4 @@ To run the test suite for this application, use the following command:
 ```
 npm test
 ```
-
 
